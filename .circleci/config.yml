@@ -32,19 +32,16 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/build
-      # - run: sudo apt-get install -y golang
-      # - run: GOPATH=$HOME/go go get github.com/tcnksm/ghr
       - run: sudo gem install --no-ri --no-rdoc fpm
       - run: fpm -s dir -t deb -n $CIRCLE_PROJECT_REPONAME -v $CIRCLE_TAG ./build
-      # - run: $HOME/go/bin/ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME --replace $CIRCLE_TAG build/
       - run:
           command: >
             echo curl -X POST --data-binary @$(ls -1 *.deb)
             -H "Authorization: token XXXX"
             -H "Content-Type: application/octet-stream"
             https://uploads.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/releases/$CIRCLE_TAG/assets?name=foo.deb
-      - run: response=$(curl -X GET https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/releases/latest)
-      - run: eval $(echo "$response" | grep -m 1 "id.:" | grep -w id | tr : = | tr -cd '[[:alnum:]]=')
+      - run: curl -X GET https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/releases/latest -o /tmp/response
+      - run: eval $(cat /tmp/response | grep -m 1 "id.:" | grep -w id | tr : = | tr -cd '[[:alnum:]]=')
       - run:
           command: >
             curl -X POST --data-binary @$(ls -1 *.deb)
