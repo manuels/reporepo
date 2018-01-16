@@ -21,6 +21,7 @@ jobs:
       # choose an image from https://hub.docker.com/u/circleci/
       - image: circleci/ruby:latest
     steps:
+      - checkout
       - run: fpm -s dir -t deb -n $CIRCLE_PROJECT_REPONAME -v `git describe --tags` ./build
       - run: $HOME/go/bin/ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME --replace `git describe --tags` build/
 
