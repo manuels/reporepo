@@ -1,0 +1,23 @@
+version: 2
+dependencies:
+  pre:
+    - go get github.com/tcnksm/ghr
+jobs:
+  build:
+    docker:
+      # choose an image from https://hub.docker.com/u/circleci/
+      - image: circleci/ruby:latest
+    steps:
+      - checkout
+      - run: apt-get update
+      - run: apt-get install -y build-essential
+      - run: apt-get install -y golang
+      - run: gem install --no-ri --no-rdoc fpm
+      - run: make
+
+deployment:
+  release:
+    tag: /(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)/
+    commands:
+      - ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME --replace `git describe --tags` build/
+
