@@ -43,7 +43,8 @@ jobs:
             -H "Authorization: token XXXX"
             -H "Content-Type: application/octet-stream"
             https://uploads.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/releases/$CIRCLE_TAG/assets?name=foo.deb
-      - run: export ID=$(curl -X GET https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/releases/latest)
+      - run: response=$(curl -X GET https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/releases/latest)
+      - run: eval $(echo "$response" | grep -m 1 "id.:" | grep -w id | tr : = | tr -cd '[[:alnum:]]=')
       - run:
           command: >
             curl -X POST --data-binary @$(ls -1 *.deb)
