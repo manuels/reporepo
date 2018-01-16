@@ -17,4 +17,3 @@ jobs:
       - run: make
       - run: fpm -s dir -t deb -n $(CIRCLE_PROJECT_REPONAME) -v `git describe --tags` ./build
       - run: ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME --replace `git describe --tags` build/
-
