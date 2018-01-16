@@ -21,7 +21,7 @@ jobs:
     docker:
       # choose an image from https://hub.docker.com/u/circleci/
       - image: circleci/ruby:latest
-    working_directory: /tmp/build
+    working_directory: /tmp/
     steps:
       - attach_workspace:
           at: /tmp/build
