@@ -12,9 +12,6 @@ jobs:
       - checkout
       - run: sudo apt-get update
       - run: sudo apt-get install -y build-essential
-      - run: sudo apt-get install -y golang
-      - run: GOPATH=$HOME/go go get github.com/tcnksm/ghr
-      - run: sudo gem install --no-ri --no-rdoc fpm
       - run: make
 
   deploy:
@@ -24,6 +21,9 @@ jobs:
     working_directory: /tmp/my-project
     steps:
       - checkout
+      - run: sudo apt-get install -y golang
+      - run: GOPATH=$HOME/go go get github.com/tcnksm/ghr
+      - run: sudo gem install --no-ri --no-rdoc fpm
       - run: fpm -s dir -t deb -n $CIRCLE_PROJECT_REPONAME -v `git describe --tags` ./build
       - run: $HOME/go/bin/ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME --replace `git describe --tags` build/
 
