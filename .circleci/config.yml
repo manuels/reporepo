@@ -19,11 +19,9 @@ jobs:
   deploy-job:
     docker:
       - image: circleci/ruby:latest
-    release:
-      tag: /(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)/
-      commands:
-        - fpm -s dir -t deb -n $(CIRCLE_PROJECT_REPONAME) -v `git describe --tags` ./build
-        - ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME --replace `git describe --tags` build/
+    steps:
+      - fpm -s dir -t deb -n $(CIRCLE_PROJECT_REPONAME) -v `git describe --tags` ./build
+      - ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME --replace `git describe --tags` build/
       
 workflows:
   version: 2
@@ -33,4 +31,6 @@ workflows:
       - deploy-job:
           requires:
             - build-job
+          filters:
+            tag: /(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)/
 
