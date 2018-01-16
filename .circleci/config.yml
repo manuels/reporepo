@@ -13,14 +13,16 @@ jobs:
       - run: sudo apt-get update
       - run: sudo apt-get install -y build-essential
       - run: make
-
+      - persist_to_workspace:
+          root: build
   deploy:
     docker:
       # choose an image from https://hub.docker.com/u/circleci/
       - image: circleci/ruby:latest
-    working_directory: /tmp/my-project
+    working_directory: /tmp/build
     steps:
-      - checkout
+      - attach_workspace:
+          at: /tmp/build
       - run: sudo apt-get install -y golang
       - run: GOPATH=$HOME/go go get github.com/tcnksm/ghr
       - run: sudo gem install --no-ri --no-rdoc fpm
@@ -29,7 +31,7 @@ jobs:
 
 workflows:
   version: 2
-  build-test-and-deploy:
+  build-and-deploy:
     jobs:
       - build:
           filters:
