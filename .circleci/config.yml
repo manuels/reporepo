@@ -16,7 +16,7 @@ jobs:
       - run: sudo gem install --no-ri --no-rdoc fpm
       - run: make
 
-  build:
+  deploy:
     docker:
       # choose an image from https://hub.docker.com/u/circleci/
       - image: circleci/ruby:latest
@@ -32,4 +32,7 @@ workflows:
       - deploy:
           requires:
             - build
+          filters:
+            tags:
+              only: /\d+(\.\d+){2}(-(alpha|beta)(\d+)?)?/
 
