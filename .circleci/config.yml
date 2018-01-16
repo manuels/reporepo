@@ -27,7 +27,7 @@ jobs:
           at: /tmp/build
       # - run: sudo apt-get install -y golang
       # - run: GOPATH=$HOME/go go get github.com/tcnksm/ghr
-      # - run: sudo gem install --no-ri --no-rdoc fpm
+      - run: sudo gem install --no-ri --no-rdoc fpm
       - run: fpm -s dir -t deb -n $CIRCLE_PROJECT_REPONAME -v $CIRCLE_TAG ./build
       # - run: $HOME/go/bin/ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME --replace $CIRCLE_TAG build/
       - run:
