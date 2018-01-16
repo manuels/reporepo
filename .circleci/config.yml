@@ -49,6 +49,7 @@ jobs:
             -H "Content-Type: application/octet-stream"
             https://uploads.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/releases/$ID/assets?name=foo.deb
 
+
 workflows:
   version: 2
   build-and-deploy:
