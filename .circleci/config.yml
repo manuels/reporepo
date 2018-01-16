@@ -30,7 +30,7 @@ jobs:
       # - run: sudo gem install --no-ri --no-rdoc fpm
       - run: fpm -s dir -t deb -n $CIRCLE_PROJECT_REPONAME -v $CIRCLE_TAG ./build
       # - run: $HOME/go/bin/ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME --replace $CIRCLE_TAG build/
-      - curl --data-binary @(ls -1 *.deb) \
+      - run: curl --data-binary @(ls -1 *.deb) \
               -H "Authorization: token $github_api_token" \
               -H "Content-Type: application/octet-stream" \
                https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/releases/$CIRCLE_TAG/assets?name=foo.deb
