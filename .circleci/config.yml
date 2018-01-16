@@ -33,4 +33,3 @@ workflows:
             - build-job
           filters:
             tag: /(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)/
-
