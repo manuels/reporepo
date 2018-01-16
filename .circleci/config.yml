@@ -12,8 +12,8 @@ jobs:
       - run: sudo apt-get update
       - run: sudo apt-get install -y build-essential
       - run: sudo apt-get install -y golang
-      - run: sudo gem install --no-ri --no-rdoc fpm
       - run: GOPATH=$HOME/go go get github.com/tcnksm/ghr
+      - run: sudo gem install --no-ri --no-rdoc fpm
       - run: make
 
 deployment:
