@@ -1,3 +1,3 @@
 all:
-    mkdir -p build
-	cc main.c -o build/main
+    mkdir -p build/usr/bin
+	cc main.c -o build/usr/bin/main

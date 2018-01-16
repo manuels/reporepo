@@ -13,6 +13,7 @@ jobs:
       - run: sudo apt-get install -y build-essential
       - run: sudo apt-get install -y golang
       - run: sudo gem install --no-ri --no-rdoc fpm
+      - run: export GOPATH=$HOME/go
       - run: go get github.com/tcnksm/ghr
       - run: make
 
@@ -20,4 +21,5 @@ deployment:
   release:
     tag: /(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)/
     commands:
+      - fpm -s dir -t deb -n $(NAME) -v $(VERSION) --prefix /opt/jenkins jenkins.war
       - ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME --replace `git describe --tags` build/
