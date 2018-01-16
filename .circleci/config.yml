@@ -7,6 +7,7 @@ jobs:
     docker:
       # choose an image from https://hub.docker.com/u/circleci/
       - image: circleci/ruby:latest
+    working_directory: /tmp/my-project
     steps:
       - checkout
       - run: sudo apt-get update
@@ -20,6 +21,7 @@ jobs:
     docker:
       # choose an image from https://hub.docker.com/u/circleci/
       - image: circleci/ruby:latest
+    working_directory: /tmp/my-project
     steps:
       - checkout
       - run: fpm -s dir -t deb -n $CIRCLE_PROJECT_REPONAME -v `git describe --tags` ./build
